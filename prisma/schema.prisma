@@ -6,10 +6,22 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
+  output   = "../prisma/bills-client"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model Bill {
+  id         Int      @id @default(autoincrement()) 
+  uuid       String   @unique
+  userUuid   String   
+  billStatus String
+  amount     Int
+  paidAt     DateTime?
+  deleted    Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
