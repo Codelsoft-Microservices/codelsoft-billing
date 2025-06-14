@@ -5,7 +5,13 @@
     "start": "node app.js",
     "dev": "nodemon app.js",
     "seed": "node src/database/seeders/seeder.js",
-    "generate": "npx prisma generate"
+    "generate": "npx prisma generate --schema=prisma/schema.prisma",
+    "reset": "npx prisma migrate reset --force --skip-seed --schema=prisma/schema.prisma",
+    "migrate": "npx prisma migrate dev --schema=prisma/schema.prisma",
+    "deploy": "npx prisma migrate deploy --schema=prisma/schema.prisma",
+    "studio": "npx prisma studio --schema=prisma/schema.prisma",
+    "initdb": "npm run migrate && npm run seed"
+
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.13.4",
