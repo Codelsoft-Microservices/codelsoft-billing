@@ -8,10 +8,9 @@ config({path: './.env'});
 
 const server = new Server();
 
-process.env.DATABASE_URL.replace(
-    "<PASSWORD>",
-    process.env.DATABASE_PASSWORD
-    ).replace("<USER>", process.env.DATABASE_USER);
+process.env.DATABASE_URL
+    .replace("<PASSWORD>",process.env.DATABASE_PASSWORD)
+    .replace("<USER>", process.env.DATABASE_USER);
 
 // connectToRabbitMQ()
 //     .then(() => console.log('Conexión a RabbitMQ exitosa'))
