@@ -7,6 +7,11 @@ config({path: './.env'});
 
 const server = new Server();
 
+process.env.DATABASE_URL.replace(
+    "<PASSWORD>",
+    process.env.DATABASE_PASSWORD
+    ).replace("<USER>", process.env.DATABASE_USER);
+
 const billingProto = loadProto('billing')
 server.addService(billingProto.BillingService.service, billingService);
 
