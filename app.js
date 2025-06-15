@@ -13,8 +13,6 @@ process.env.DATABASE_URL = process.env.DATABASE_URL
     .replace("<USER>", process.env.DATABASE_USER);
 const DB = process.env.DATABASE_URL;
 
-console.log(`- Conectando a la base de datos: ${DB}`);
-
 // connectToRabbitMQ()
 //     .then(() => console.log('Conexión a RabbitMQ exitosa'))
 //     .catch(error => console.error('Error al conectar a RabbitMQ:', error));

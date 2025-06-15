@@ -40,7 +40,7 @@ message Bill {
   string userUuid = 2;
   string billStatus = 3;
   int32 amount = 4;
-  string createdAt = 5;
+  string issuedAt = 5;
   string paidAt = 6;
 }
 
