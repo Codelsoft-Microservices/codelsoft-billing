@@ -11,7 +11,6 @@
     "deploy": "npx prisma migrate deploy --schema=prisma/schema.prisma",
     "studio": "npx prisma studio --schema=prisma/schema.prisma",
     "initdb": "npm run migrate && npm run seed"
-
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.13.4",
@@ -20,6 +19,7 @@
     "amqplib": "^0.10.8",
     "dayjs": "^1.11.13",
     "dotenv": "^16.5.0",
+    "nodemon": "^3.1.10",
     "prisma": "^6.9.0",
     "uuid": "^11.1.0"
   },

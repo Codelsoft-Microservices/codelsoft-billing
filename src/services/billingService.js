@@ -1,6 +1,7 @@
 
 import { prisma } from "../database/prisma.js";
 import { status } from "@grpc/grpc-js";
+import { v4 as uuidv4 } from "uuid";
 import  catchAsync from "../utils/catchAsync.js";
 
 const validStatuses = ["Pending", "Paid", "Overdue"];
@@ -38,6 +39,7 @@ const CreateBill = catchAsync(async (call, callback) => {
     }
     const newBill = await prisma.bill.create({
         data: {
+            uuid: uuidv4(),
             userUuid,
             billStatus,
             amount,
