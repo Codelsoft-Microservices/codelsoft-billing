@@ -7,7 +7,7 @@ const validStatuses = ["Pending", "Paid", "Overdue"];
 
 
 /*Metodo de prueba*/
-const BillsCheck = catchAsync(async (callback) => {
+const BillsCheck = catchAsync(async (call, callback) => {
     return callback(null, {
         message: "El servicio de facturación está funcionando",
     });
