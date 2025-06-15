@@ -7,14 +7,13 @@ const validStatuses = ["Pending", "Paid", "Overdue"];
 
 
 /*Metodo de prueba*/
-const billsCheck = catchAsync(async (callback) => {
+const BillsCheck = catchAsync(async (callback) => {
     return callback(null, {
         message: "El servicio de facturación está funcionando",
     });
 });
 
 const CreateBill = catchAsync(async (call, callback) => {
-    // Apartado de datos
     const { userUuid, billStatus, amount } = call.request;
     // Verifica si se ingresaron todos los datos necesarios para crear la factura
     if (!userUuid || !billStatus || !amount) {
@@ -46,15 +45,22 @@ const CreateBill = catchAsync(async (call, callback) => {
     });
     return callback(null, {
         message: "Factura creada exitosamente",
-        data: newBill,
+        bill: {
+            uuid: newBill.uuid,
+            userUuid: newBill.userUuid,
+            billStatus: newBill.billStatus,
+            amount: newBill.amount,
+            createdAt: newBill.createdAt,
+            paidAt: newBill.paidAt,
+        }
     });
 });
 
 const GetBillById = catchAsync(async (call, callback) => {
     // Apartado de datos
-    const { id } = call.request;
+    const { uuid } = call.request;
     const bill = await prisma.bill.findUnique({
-        where: { id: parseInt(id) },
+        where: { uuid: uuid },
     });
     if (!bill) {
         return callback({
@@ -64,14 +70,21 @@ const GetBillById = catchAsync(async (call, callback) => {
     }
     return callback(null, {
         message: "Factura encontrada",
-        data: bill,
+        bill: {
+            uuid: bill.uuid,
+            userUuid: bill.userUuid,
+            billStatus: bill.billStatus,
+            amount: bill.amount,
+            createdAt: bill.createdAt,
+            paidAt: bill.paidAt,
+        },
     });
 });
 
 const UpdateBillStatus = catchAsync(async (call, callback) => {
-    const { id, billStatus } = call.request;
+    const { uuid, billStatus } = call.request;
     // Verifica si se ingresó el ID de la factura
-    if (!id || !billStatus) {
+    if (!uuid || !billStatus) {
         return callback({
             code: status.INVALID_ARGUMENT,
             message: "Faltan datos necesarios para actualizar el estado de la factura",
@@ -86,7 +99,7 @@ const UpdateBillStatus = catchAsync(async (call, callback) => {
     }
 
     const updatedBill = await prisma.bill.update({
-        where: { id: parseInt(id) },
+        where: { uuid: uuid },
         data: {
             billStatus,
             paidAt: billStatus === "Paid" ? new Date() : null,
@@ -95,15 +108,22 @@ const UpdateBillStatus = catchAsync(async (call, callback) => {
 
     return callback(null, {
         message: "Estado de la factura actualizado exitosamente",
-        data: updatedBill,
+        bill: {
+            uuid: updatedBill.uuid,
+            userUuid: updatedBill.userUuid,
+            billStatus: updatedBill.billStatus,
+            amount: updatedBill.amount,
+            createdAt: updatedBill.createdAt,
+            paidAt: updatedBill.paidAt,
+        },
     });
 
 });
 
 const DeleteBill = catchAsync(async (call, callback) => {
-    const { id } = call.request;
+    const { uuid } = call.request;
     const bill = await prisma.bill.findUnique({
-        where: { id: parseInt(id) },
+        where: { uuid: uuid },
     });
 
     if (!bill) {
@@ -121,13 +141,11 @@ const DeleteBill = catchAsync(async (call, callback) => {
     }
 
     await prisma.bill.update({
-        where: { id: parseInt(id) },
+        where: { uuid: uuid },
         data: { deleted: true },
     });
 
-    return callback(null, {
-        message: "Factura eliminada exitosamente",
-    });
+    return callback(null, {});
 });
 
 const ListBillsByUser = catchAsync(async (call, callback) => {
@@ -156,13 +174,21 @@ const ListBillsByUser = catchAsync(async (call, callback) => {
         });
     }
     return callback(null, {
-        data: bills,
+        message: "Facturas encontradas",
+        bills: bills.map(b => ({
+            uuid: b.uuid,
+            userUuid: b.userUuid,
+            billStatus: b.billStatus,
+            amount: b.amount,
+            createdAt: b.createdAt,
+            paidAt: b.paidAt,
+        })),
     });
 });
 
 /*Exporte de todos los metodos correspondientes al controlador para ser usados en nuestro Router.*/
 export default { 
-    billsCheck,
+    BillsCheck,
     CreateBill,
     GetBillById,
     UpdateBillStatus,

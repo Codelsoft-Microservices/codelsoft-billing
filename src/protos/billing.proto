@@ -6,17 +6,9 @@ service BillingService {
   rpc CreateBill (CreateBillRequest) returns (BillResponse);
   rpc GetBillById (GetBillByIdRequest) returns (BillResponse);
   rpc UpdateBillStatus (UpdateBillStatusRequest) returns (BillResponse);
-  rpc DeleteBill (DeleteBillRequest) returns (DeleteBillResponse);
+  rpc DeleteBill (DeleteBillRequest) returns (Empty);
   rpc ListBillsByUser (ListBillsByUserRequest) returns (ListBillsByUserResponse);
-}
-
-message BillResponse {
-  int32 id = 1;
-  string userUuid = 2;
-  string billStatus = 3;
-  int32 amount = 4;
-  string createdAt = 5;
-  string paidAt = 6;
+  rpc BillsCheck (Empty) returns (Check);
 }
 
 message CreateBillRequest {
@@ -26,16 +18,16 @@ message CreateBillRequest {
 }
 
 message GetBillByIdRequest {
-  int32 id = 1;
+  string uuid = 1;
 }
 
 message UpdateBillStatusRequest {
-  int32 id = 1;
+  string uuid = 1;
   string billStatus = 2;
 }
 
 message DeleteBillRequest {
-  int32 id = 1;
+  string uuid= 1;
 }
 
 message ListBillsByUserRequest {
@@ -43,19 +35,26 @@ message ListBillsByUserRequest {
   string billStatus = 2;
 }
 
-message User{
+message Bill {
   string uuid = 1;
-  string name = 2;
-  string lastName = 3;
+  string userUuid = 2;
+  string billStatus = 3;
+  int32 amount = 4;
+  string createdAt = 5;
+  string paidAt = 6;
 }
 
-message DeleteBillResponse {
+message BillResponse {
   string message = 1;
+  Bill bill = 2;
 }
 
 message ListBillsByUserResponse {
-  repeated BillResponse bills = 1;
+  string message = 1;
+  repeated Bill bills = 2;
 }
+
+message Empty {}
 
 message Check {
   string message = 1;
