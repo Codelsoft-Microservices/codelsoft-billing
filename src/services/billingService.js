@@ -50,7 +50,7 @@ const CreateBill = catchAsync(async (call, callback) => {
             userUuid: newBill.userUuid,
             billStatus: newBill.billStatus,
             amount: newBill.amount,
-            createdAt: newBill.createdAt,
+            issuedAt: newBill.issuedAt,
             paidAt: newBill.paidAt,
         }
     });
@@ -75,7 +75,7 @@ const GetBillById = catchAsync(async (call, callback) => {
             userUuid: bill.userUuid,
             billStatus: bill.billStatus,
             amount: bill.amount,
-            createdAt: bill.createdAt,
+            issuedAt: bill.issuedAt,
             paidAt: bill.paidAt,
         },
     });
@@ -113,7 +113,7 @@ const UpdateBillStatus = catchAsync(async (call, callback) => {
             userUuid: updatedBill.userUuid,
             billStatus: updatedBill.billStatus,
             amount: updatedBill.amount,
-            createdAt: updatedBill.createdAt,
+            issuedAt: updatedBill.issuedAt,
             paidAt: updatedBill.paidAt,
         },
     });
@@ -180,7 +180,7 @@ const ListBillsByUser = catchAsync(async (call, callback) => {
             userUuid: b.userUuid,
             billStatus: b.billStatus,
             amount: b.amount,
-            createdAt: b.createdAt,
+            issuedAt: b.issuedAt,
             paidAt: b.paidAt,
         })),
     });
