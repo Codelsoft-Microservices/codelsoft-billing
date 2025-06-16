@@ -8,6 +8,7 @@ service BillingService {
   rpc UpdateBillStatus (UpdateBillStatusRequest) returns (BillResponse);
   rpc DeleteBill (DeleteBillRequest) returns (Empty);
   rpc ListBillsByUser (ListBillsByUserRequest) returns (ListBillsByUserResponse);
+  rpc ListAllBills (Empty) returns (ListBillsByUserResponse);
   rpc BillsCheck (Empty) returns (Check);
 }
 

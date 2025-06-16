@@ -188,6 +188,32 @@ const ListBillsByUser = catchAsync(async (call, callback) => {
     });
 });
 
+const ListAllBills  = catchAsync(async (call, callback) => {
+    const bills = await prisma.bill.findMany({
+        where: { deleted: false },
+    });
+
+    if (bills.length === 0) {
+        return callback({
+            code: status.NOT_FOUND,
+            message: "No se encontraron facturas",
+        });
+    }
+
+    return callback(null, {
+        message: "Facturas encontradas",
+        bills: bills.map(b => ({
+            uuid: b.uuid,
+            userUuid: b.userUuid,
+            billStatus: b.billStatus,
+            amount: b.amount,
+            issuedAt: b.issuedAt,
+            paidAt: b.paidAt,
+        })),
+    });
+
+});
+
 /*Exporte de todos los metodos correspondientes al controlador para ser usados en nuestro Router.*/
 export default { 
     BillsCheck,
@@ -196,4 +222,5 @@ export default {
     UpdateBillStatus,
     DeleteBill,
     ListBillsByUser,
+    ListAllBills
 };
