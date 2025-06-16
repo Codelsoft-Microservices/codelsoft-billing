@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package billing;
+
+service BillingService {
+  rpc CreateBill (CreateBillRequest) returns (BillResponse);
+  rpc GetBillById (GetBillByIdRequest) returns (BillResponse);
+  rpc UpdateBillStatus (UpdateBillStatusRequest) returns (BillResponse);
+  rpc DeleteBill (DeleteBillRequest) returns (Empty);
+  rpc ListBillsByUser (ListBillsByUserRequest) returns (ListBillsByUserResponse);
+  rpc BillsCheck (Empty) returns (Check);
+}
+
+message CreateBillRequest {
+  string userUuid = 1;
+  string billStatus = 2;
+  int32 amount = 3;
+}
+
+message GetBillByIdRequest {
+  string uuid = 1;
+}
+
+message UpdateBillStatusRequest {
+  string uuid = 1;
+  string billStatus = 2;
+}
+
+message DeleteBillRequest {
+  string uuid= 1;
+}
+
+message ListBillsByUserRequest {
+  string userUuid = 1;
+  string billStatus = 2;
+}
+
+message Bill {
+  string uuid = 1;
+  string userUuid = 2;
+  string billStatus = 3;
+  int32 amount = 4;
+  string issuedAt = 5;
+  string paidAt = 6;
+}
+
+message BillResponse {
+  string message = 1;
+  Bill bill = 2;
+}
+
+message ListBillsByUserResponse {
+  string message = 1;
+  repeated Bill bills = 2;
+}
+
+message Empty {}
+
+message Check {
+  string message = 1;
+}

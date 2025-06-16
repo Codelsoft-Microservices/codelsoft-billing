@@ -1,0 +1,20 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../prisma/bills-client"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Bill {
+  id         Int       @id @default(autoincrement())
+  uuid       String    @unique(map: "Bill_uuid_key")
+  userUuid   String
+  billStatus String
+  amount     Int
+  issuedAt   DateTime  @default(now())
+  paidAt     DateTime?
+  deleted    Boolean   @default(false)
+}

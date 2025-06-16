@@ -1,0 +1,11 @@
+services:
+  mariadb:
+        image: mariadb:latest
+        container_name: mariadb-codelsoft
+        environment:
+            MYSQL_ROOT_PASSWORD: rootpassword
+            MYSQL_DATABASE: mydatabase
+            MYSQL_USER: user
+            MYSQL_PASSWORD: userpassword
+        ports:
+            - "3306:3306"

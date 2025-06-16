@@ -136,5 +136,4 @@ dist
 .pnp.*
 
 
-prisma-auth-database/auth-client/
-prisma-bills-database/bills-client/
+/prisma/bills-client/
