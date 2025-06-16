@@ -1,4 +1,4 @@
-import { PrismaClient } from "../../prisma/bills-client/index.js";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = globalThis.prisma || new PrismaClient();
 

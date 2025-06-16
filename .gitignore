@@ -137,3 +137,5 @@ dist
 
 
 /prisma/bills-client/
+
+/generated/prisma
